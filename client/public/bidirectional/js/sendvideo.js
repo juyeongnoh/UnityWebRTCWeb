@@ -11,7 +11,7 @@ export class SendVideo {
    * @param {MediaTrackConstraints} audioSource
    * @param {number} videoWidth
    * @param {number} videoHeight
-   */ // 카메라와 마이크를 사용하여 로컬 비디오를 시작합니다.
+   */ // 카메라와 마이크를 사용하여 로컬 비디오를 시작
   async startLocalVideo(videoSource, audioSource, videoWidth, videoHeight) {
     try {
       const constraints = {
@@ -33,7 +33,7 @@ export class SendVideo {
       Logger.error(`mediaDevice.getUserMedia() error:${err}`);
     }
   }
-
+  // 화면 공유 시작
    async startLocalVideoScreen() {
     try {
       const constraints = { video: true, audio: true };

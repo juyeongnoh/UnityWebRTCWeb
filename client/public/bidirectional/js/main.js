@@ -190,6 +190,8 @@ function getRandom() {
   return (Array(length).join('0') + number).slice(-length);
 }
 
+
+
 async function setUpInputSelect() {
   const deviceInfos = await navigator.mediaDevices.enumerateDevices();
 
