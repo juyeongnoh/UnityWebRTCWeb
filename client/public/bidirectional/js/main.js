@@ -183,11 +183,13 @@ async function hangUp() {
   }
 }
 
+  // Connection ID
 function getRandom() {
-  const max = 99999;
-  const length = String(max).length;
-  const number = Math.floor(Math.random() * max);
-  return (Array(length).join('0') + number).slice(-length);
+  // const max = 99999;
+  // const length = String(max).length;
+  // const number = Math.floor(Math.random() * max);
+  // return (Array(length).join('0') + number).slice(-length);
+  return 11111;
 }
 
 
