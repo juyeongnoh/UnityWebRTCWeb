@@ -1,6 +1,7 @@
 @font-face {
-  font-family: 'SUIT-Regular';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
+  font-family: "SUIT-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -8,7 +9,7 @@
 /* BODY */
 body {
   background-color: skyblue;
-  font-family: 'SUIT', sans-serif;
+  font-family: "SUIT", sans-serif;
   font-weight: 300;
   word-break: break-word;
   position: relative;
@@ -37,7 +38,7 @@ body {
 }
 
 #container header.title h1 {
-  font-family: 'SUIT', sans-serif;
+  font-family: "SUIT", sans-serif;
   font-weight: 900;
   font-size: 2.5em;
 }
@@ -63,8 +64,8 @@ body {
   cursor: pointer;
   box-sizing: border-box;
   display: block;
-  transition: .4s;
-  margin-right: .5em;
+  transition: 0.4s;
+  margin-right: 0.5em;
 }
 
 .btn--pc:hover {
@@ -84,8 +85,8 @@ body {
   cursor: pointer;
   box-sizing: border-box;
   display: block;
-  transition: .4s;
-  margin-left: .5em;
+  transition: 0.4s;
+  margin-left: 0.5em;
 }
 
 .btn--videocall:hover {
@@ -104,7 +105,7 @@ body {
 #container section#info #startup h3 {
   font-size: 1.2em;
   font-weight: 700;
-  margin: 0 0 .5em 0;
+  margin: 0 0 0.5em 0;
 }
 
 #container section#info #startup li {
