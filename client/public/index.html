@@ -31,7 +31,7 @@
       });
     }
   </script>
-
+      <script src="/js/home/getcookie.js" defer></script>
 
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="icon" href="images/favicon.ico" type="image/x-icon">
@@ -60,23 +60,28 @@
       </div>
     </section>
 
-        <section id="menu">
-      <div class="btn--pc" onClick="location.href='/register'">
-        <div class="material-icons">회원가입</div>
+    <section id="menu">
+        <div class="btn--login" id="loginBtn" onClick="location.href='/login'">
+        <div>로그인</div>
       </div>
-      <div class="btn--videocall" onClick="location.href='/login'">
-        <div class="material-icons">로그인</div>
+      <div class="btn--register" id="RegisterBtn" onClick="location.href='/register'">
+        <div>회원가입</div>
+      </div>
+      <div class="btn--register" id="LogoutBtn" onClick="location.href='/logout'">
+        <div>로그아웃</div>
       </div>
     </section>
 
     <section id="info">
       <div id="startup">
+        <h1 id="cookieValue" style="text-align: center;"></h1>
         <!-- h3
         li
         li -->
       </div>
     </section>
 
+  </html>
     <!-- <section>
       <h2 id="receiver"><a href="receiver/index.html">Receiver Sample</a></h2>
       <p>This is a sample for receiving video / audio from Unity.</p>

@@ -56,7 +56,11 @@ class User {
       const user = await UserStorage.getUserInfo(client.id);
       if (user) {
         if (user.id === client.id && user.pw === client.pw) {
-          return { success: true, id: user.id };
+          return {
+            success: true,
+            name: user.name,
+            connectoinid: user.connectionID,
+          };
         }
         return { success: false, msg: "비밀번호가 틀렸습니다." };
       }
@@ -124,7 +128,16 @@ var createServer = function (config) {
   app.post("/login", async (req, res) => {
     const user = new User(req.body);
     const response = await user.login();
-    res.cookie("user", response.id);
+    if (response.success) {
+      res.cookie("connectionID", response.connectoinid, {
+        expires: new Date(Date.now() + 900000),
+        // httpOnly: true,
+      });
+      res.cookie("user", response.name, {
+        expires: new Date(Date.now() + 900000),
+        // httpOnly: true,
+      });
+    }
     return res.json(response);
   });
 
@@ -136,6 +149,13 @@ var createServer = function (config) {
     const user = new User(req.body);
     const response = await user.register();
     return res.json(response);
+  });
+
+  app.get("/logout", (req, res) => {
+    res.clearCookie("connectionID");
+    res.clearCookie("user");
+
+    res.redirect("/");
   });
 
   return app;

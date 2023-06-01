@@ -94,6 +94,44 @@ body {
   color: #fff;
 }
 
+.btn--login {
+  width: 140px;
+  padding: 10px;
+  /* /* border: 1px solid #333; */
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-right: 0.5em;
+}
+
+.btn--register {
+  width: 140px;
+  padding: 10px;
+  /* /* border: 1px solid #333; */
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-left: 0.5em;
+}
+
+.btn--login:hover,
+.btn--register:hover {
+  background-color: #dbdbdb;
+  border-radius: 1em;
+}
+
 /* CONNECTION INFO */
 #container section#info {
   color: #333;
