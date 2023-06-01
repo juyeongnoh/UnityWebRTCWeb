@@ -9,6 +9,7 @@ var signaling_1 = require("./signaling");
 var log_1 = require("./log");
 var httphandler_1 = require("./class/httphandler");
 var cors = require("cors");
+var cookieParser = require("cookie-parser");
 
 const mysql = require("mysql");
 
@@ -59,7 +60,7 @@ class User {
         }
         return { success: false, msg: "비밀번호가 틀렸습니다." };
       }
-      return { success: false, msg: "존재하지 않습니다." };
+      return { success: false, msg: "아이디가 존재하지 않습니다." };
     } catch (err) {
       return { success: false, msg: err };
     }
@@ -114,6 +115,7 @@ var createServer = function (config) {
 
   app.set("views", "./client/public/views");
   app.set("view engine", "ejs");
+  app.use(cookieParser());
 
   app.get("/login", (req, res) => {
     res.render("home/login");
