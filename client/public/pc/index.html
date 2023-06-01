@@ -4,25 +4,22 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <title>Bidirectional Sample</title>
+  <title>emptied - PC 화면 공유</title>
 </head>
 
 <body>
   <div id="container">
-    <h1>Bidirectional Sample</h1>
+    <h1>PC 화면 공유</h1>
 
-    <!--  -->
-        <div class="top-right">
-
-      <button type="button" id="signUpButton">
-        <a href="/register"> 회원가입 </a></button>
-              <button type="button" id="signUpButton">
-        <a href="/login"> login </a></button>
-    </div>
     <div id="warning" hidden=true></div>
+    <div id="btnStartSharing" class="btn--pc">
+      <div class="material-icons">computer</div>
+      <br>화면 공유 시작하기
+    </div>
 
     <div id="select">
       <label for="videoSource">Video source: </label>
@@ -38,6 +35,7 @@
       <label for="cameraWidth">Camera width:</label><input id="cameraWidth" type="number" min="0" max="4096" autocomplete="off" disabled>
       <label for="cameraHeight">Camera height:</label><input id="cameraHeight" type="number" min="0" max="4096" autocomplete="off" disabled>
     </div>
+    
 
     <div id="buttons">
       <button type="button" id="startVideoButton" autocomplete="off">Start Video</button>
@@ -50,11 +48,6 @@
         <h2>Local</h2>
         <video id="localVideo" playsinline autoplay muted=true></video>
         <div id="localVideoStats"></div>
-      </div>
-      <div id="remote">
-        <h2>Remote</h2>
-        <video id="remoteVideo" playsinline autoplay></video>
-        <div id="remoteVideoStats"></div>
       </div>
     </div>
 
@@ -69,16 +62,8 @@
       </select>
     </div>
 
-    <p>For more information about <code>Bidirectional</code> sample, see <a
-        href="https://docs.unity3d.com/Packages/com.unity.renderstreaming@3.1/manual/sample-bidirectional.html">Bidirectional
-        sample</a> document page.</p>
-
     <div id="message"></div>
 
-    <section>
-      <a href="https://github.com/Unity-Technologies/UnityRenderStreaming/tree/develop/WebApp/public/bidirectional"
-        title="View source for this page on GitHub" id="viewSource">View source on GitHub</a>
-    </section>
   </div>
 </body>
 
