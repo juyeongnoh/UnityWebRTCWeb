@@ -22,8 +22,6 @@ function login() {
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
-        console.log("ID : " + req.id);
-
         location.href = "/";
       } else {
         alert(res.msg);

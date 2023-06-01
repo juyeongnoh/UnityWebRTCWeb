@@ -56,7 +56,7 @@ class User {
       const user = await UserStorage.getUserInfo(client.id);
       if (user) {
         if (user.id === client.id && user.pw === client.pw) {
-          return { success: true };
+          return { success: true, id: user.id };
         }
         return { success: false, msg: "비밀번호가 틀렸습니다." };
       }
@@ -124,6 +124,7 @@ var createServer = function (config) {
   app.post("/login", async (req, res) => {
     const user = new User(req.body);
     const response = await user.login();
+    res.cookie("user", response.id);
     return res.json(response);
   });
 
