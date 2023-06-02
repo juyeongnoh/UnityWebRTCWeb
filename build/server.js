@@ -158,6 +158,11 @@ var createServer = function (config) {
     res.redirect("/");
   });
 
+  app.get("/json", (req, res) => {
+    res.send("되나여");
+    // res.render("home/json")
+  });
+
   return app;
 };
 exports.createServer = createServer;

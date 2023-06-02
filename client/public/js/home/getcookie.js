@@ -15,10 +15,21 @@ function getCookie(name) {
 }
 
 // 쿠키에서 값을 가져와서 <h2>에 표시하기
-var cookieValue = getCookie("user"); // 쿠키 이름을 변경하여 필요한 쿠키의 값을 가져옵니다
+var user_cookieValue = getCookie("user");
 console.log(getCookie("user"));
 
-var greetingMessage = "안녕하세요, " + cookieValue + "님!";
-var cookieDisplay = document.getElementById("cookieValue");
+var greetingMessage = "안녕하세요, " + user_cookieValue + "님!";
+var user_cookieDisplay = document.getElementById("user_cookieValue");
 
-if (cookieValue != null) cookieDisplay.textContent = greetingMessage;
+// login, logout button hidden
+const loginBtn = document.getElementById("loginBtn");
+const RegisterBtn = document.getElementById("RegisterBtn");
+const logoutBtn = document.getElementById("LogoutBtn");
+
+if (user_cookieValue != null) {
+  user_cookieDisplay.textContent = greetingMessage;
+  loginBtn.style.display = "none";
+  RegisterBtn.style.display = "none";
+} else {
+  logoutBtn.style.display = "none";
+}

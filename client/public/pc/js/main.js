@@ -6,37 +6,37 @@ import { Signaling, WebSocketSignaling } from "../../module/signaling.js";
 
 const defaultStreamWidth = 1280;
 const defaultStreamHeight = 720;
-const streamSizeList =
-  [
-    { width: 640, height: 360 },
-    { width: 1280, height: 720 },
-    { width: 1920, height: 1080 },
-    { width: 2560, height: 1440 },
-    { width: 3840, height: 2160 },
-    { width: 360, height: 640 },
-    { width: 720, height: 1280 },
-    { width: 1080, height: 1920 },
-    { width: 1440, height: 2560 },
-    { width: 2160, height: 3840 },
-  ];
+const streamSizeList = [
+  { width: 640, height: 360 },
+  { width: 1280, height: 720 },
+  { width: 1920, height: 1080 },
+  { width: 2560, height: 1440 },
+  { width: 3840, height: 2160 },
+  { width: 360, height: 640 },
+  { width: 720, height: 1280 },
+  { width: 1080, height: 1920 },
+  { width: 1440, height: 2560 },
+  { width: 2160, height: 3840 },
+];
 
-const localVideo = document.getElementById('localVideo');
-const remoteVideo = document.getElementById('remoteVideo');
-const localVideoStatsDiv = document.getElementById('localVideoStats');
-const remoteVideoStatsDiv = document.getElementById('remoteVideoStats');
-const textForConnectionId = document.getElementById('textForConnectionId');
-textForConnectionId.value = getRandom();
-const videoSelect = document.querySelector('select#videoSource');
-const audioSelect = document.querySelector('select#audioSource');
-const videoResolutionSelect = document.querySelector('select#videoResolution');
-const cameraWidthInput = document.querySelector('input#cameraWidth');
-const cameraHeightInput = document.querySelector('input#cameraHeight');
+const localVideo = document.getElementById("localVideo");
+const remoteVideo = document.getElementById("remoteVideo");
+const localVideoStatsDiv = document.getElementById("localVideoStats");
+const remoteVideoStatsDiv = document.getElementById("remoteVideoStats");
+const textForConnectionId = document.getElementById("textForConnectionId");
+// textForConnectionId.value = getRandom();
+const videoSelect = document.querySelector("select#videoSource");
+const audioSelect = document.querySelector("select#audioSource");
+const videoResolutionSelect = document.querySelector("select#videoResolution");
+const cameraWidthInput = document.querySelector("input#cameraWidth");
+const cameraHeightInput = document.querySelector("input#cameraHeight");
 
-const codecPreferences = document.getElementById('codecPreferences');
-const supportsSetCodecPreferences = window.RTCRtpTransceiver &&
-  'setCodecPreferences' in window.RTCRtpTransceiver.prototype;
-const messageDiv = document.getElementById('message');
-messageDiv.style.display = 'none';
+const codecPreferences = document.getElementById("codecPreferences");
+const supportsSetCodecPreferences =
+  window.RTCRtpTransceiver &&
+  "setCodecPreferences" in window.RTCRtpTransceiver.prototype;
+const messageDiv = document.getElementById("message");
+messageDiv.style.display = "none";
 
 let useCustomResolution = false;
 
@@ -50,18 +50,21 @@ let renderstreaming;
 let useWebSocket;
 let connectionId;
 
-const startButton = document.getElementById('btnStartSharing');
-startButton.addEventListener('click', startVideo);
-const setupButton = document.getElementById('setUpButton');
-setupButton.addEventListener('click', setUp);
-const hangUpButton = document.getElementById('hangUpButton');
-hangUpButton.addEventListener('click', hangUp);
+const startButton = document.getElementById("btnStartSharing");
+startButton.addEventListener("click", startVideo);
+const setupButton = document.getElementById("setUpButton");
+setupButton.addEventListener("click", setUp);
+const hangUpButton = document.getElementById("hangUpButton");
+hangUpButton.addEventListener("click", hangUp);
 
-window.addEventListener('beforeunload', async () => {
-  if(!renderstreaming)
-    return;
-  await renderstreaming.stop();
-}, true);
+window.addEventListener(
+  "beforeunload",
+  async () => {
+    if (!renderstreaming) return;
+    await renderstreaming.stop();
+  },
+  true
+);
 
 setupConfig();
 
@@ -74,7 +77,8 @@ async function setupConfig() {
 function showWarningIfNeeded(startupMode) {
   const warningDiv = document.getElementById("warning");
   if (startupMode == "public") {
-    warningDiv.innerHTML = "<h4>Warning</h4> This sample is not working on Public Mode.";
+    warningDiv.innerHTML =
+      "<h4>Warning</h4> This sample is not working on Public Mode.";
     warningDiv.hidden = false;
   }
 }
@@ -90,8 +94,12 @@ async function startVideo() {
   let width = 0;
   let height = 0;
   if (useCustomResolution) {
-    width = cameraWidthInput.value ? cameraWidthInput.value : defaultStreamWidth;
-    height = cameraHeightInput.value ? cameraHeightInput.value : defaultStreamHeight;
+    width = cameraWidthInput.value
+      ? cameraWidthInput.value
+      : defaultStreamWidth;
+    height = cameraHeightInput.value
+      ? cameraHeightInput.value
+      : defaultStreamHeight;
   } else {
     const size = streamSizeList[videoResolutionSelect.value];
     width = size.width;
@@ -100,11 +108,10 @@ async function startVideo() {
 
   // if (videoSelect.value == 'Screen Sharing') {
   //   console.log('startlocalvideoscreen');
-    await sendVideo.startLocalVideoScreen();
+  await sendVideo.startLocalVideoScreen();
   // } else {
   //   await sendVideo.startLocalVideo(videoSelect.value, audioSelect.value, width, height);
   // }
-  
 
   // enable setup button after initializing local video.
   setupButton.disabled = false;
@@ -122,7 +129,7 @@ async function setUp() {
   renderstreaming.onConnect = () => {
     const tracks = sendVideo.getLocalTracks();
     for (const track of tracks) {
-      renderstreaming.addTransceiver(track, { direction: 'sendonly' });
+      renderstreaming.addTransceiver(track, { direction: "sendonly" });
     }
     setCodecPreferences();
     showStatsMessage();
@@ -145,11 +152,14 @@ function setCodecPreferences() {
   /** @type {RTCRtpCodecCapability[] | null} */
   let selectedCodecs = null;
   if (supportsSetCodecPreferences) {
-    const preferredCodec = codecPreferences.options[codecPreferences.selectedIndex];
-    if (preferredCodec.value !== '') {
-      const [mimeType, sdpFmtpLine] = preferredCodec.value.split(' ');
-      const { codecs } = RTCRtpSender.getCapabilities('video');
-      const selectedCodecIndex = codecs.findIndex(c => c.mimeType === mimeType && c.sdpFmtpLine === sdpFmtpLine);
+    const preferredCodec =
+      codecPreferences.options[codecPreferences.selectedIndex];
+    if (preferredCodec.value !== "") {
+      const [mimeType, sdpFmtpLine] = preferredCodec.value.split(" ");
+      const { codecs } = RTCRtpSender.getCapabilities("video");
+      const selectedCodecIndex = codecs.findIndex(
+        (c) => c.mimeType === mimeType && c.sdpFmtpLine === sdpFmtpLine
+      );
       const selectCodec = codecs[selectedCodecIndex];
       selectedCodecs = [selectCodec];
     }
@@ -158,15 +168,17 @@ function setCodecPreferences() {
   if (selectedCodecs == null) {
     return;
   }
-  const transceivers = renderstreaming.getTransceivers().filter(t => t.receiver.track.kind == "video");
+  const transceivers = renderstreaming
+    .getTransceivers()
+    .filter((t) => t.receiver.track.kind == "video");
   if (transceivers && transceivers.length > 0) {
-    transceivers.forEach(t => t.setCodecPreferences(selectedCodecs));
+    transceivers.forEach((t) => t.setCodecPreferences(selectedCodecs));
   }
 }
 
 async function hangUp() {
   clearStatsMessage();
-  messageDiv.style.display = 'block';
+  messageDiv.style.display = "block";
   messageDiv.innerText = `Disconnect peer on ${connectionId}.`;
 
   hangUpButton.disabled = true;
@@ -183,7 +195,7 @@ async function hangUp() {
   }
 }
 
-  // Connection ID
+// Connection ID
 function getRandom() {
   // const max = 99999;
   // const length = String(max).length;
@@ -192,20 +204,18 @@ function getRandom() {
   return 11111;
 }
 
-
-
 async function setUpInputSelect() {
   const deviceInfos = await navigator.mediaDevices.enumerateDevices();
 
   for (let i = 0; i !== deviceInfos.length; ++i) {
     const deviceInfo = deviceInfos[i];
-    if (deviceInfo.kind === 'videoinput') {
-      const option = document.createElement('option');
+    if (deviceInfo.kind === "videoinput") {
+      const option = document.createElement("option");
       option.value = deviceInfo.deviceId;
       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
       videoSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'audioinput') {
-      const option = document.createElement('option');
+    } else if (deviceInfo.kind === "audioinput") {
+      const option = document.createElement("option");
       option.value = deviceInfo.deviceId;
       option.text = deviceInfo.label || `mic ${audioSelect.length + 1}`;
       audioSelect.appendChild(option);
@@ -213,26 +223,26 @@ async function setUpInputSelect() {
   }
 
   // pc 화면 공유를 위한 옵션 추가
-  const pcScreen = document.createElement('option');
-  pcScreen.value = 'Screen Sharing';
-  pcScreen.text = 'Screen Sharing';
+  const pcScreen = document.createElement("option");
+  pcScreen.value = "Screen Sharing";
+  pcScreen.text = "Screen Sharing";
   videoSelect.appendChild(pcScreen);
 
   for (let i = 0; i < streamSizeList.length; i++) {
     const streamSize = streamSizeList[i];
-    const option = document.createElement('option');
+    const option = document.createElement("option");
     option.value = i;
     option.text = `${streamSize.width} x ${streamSize.height}`;
     videoResolutionSelect.appendChild(option);
   }
 
-  const option = document.createElement('option');
+  const option = document.createElement("option");
   option.value = streamSizeList.length;
-  option.text = 'Custom';
+  option.text = "Custom";
   videoResolutionSelect.appendChild(option);
   videoResolutionSelect.value = 1; // default select index (1280 x 720)
 
-  videoResolutionSelect.addEventListener('change', (event) => {
+  videoResolutionSelect.addEventListener("change", (event) => {
     const isCustom = event.target.value >= streamSizeList.length;
     cameraWidthInput.disabled = !isCustom;
     cameraHeightInput.disabled = !isCustom;
@@ -242,18 +252,18 @@ async function setUpInputSelect() {
 
 function showCodecSelect() {
   if (!supportsSetCodecPreferences) {
-    messageDiv.style.display = 'block';
+    messageDiv.style.display = "block";
     messageDiv.innerHTML = `Current Browser does not support <a href="https://developer.mozilla.org/en-US/docs/Web/API/RTCRtpTransceiver/setCodecPreferences">RTCRtpTransceiver.setCodecPreferences</a>.`;
     return;
   }
 
-  const codecs = RTCRtpSender.getCapabilities('video').codecs;
-  codecs.forEach(codec => {
-    if (['video/red', 'video/ulpfec', 'video/rtx'].includes(codec.mimeType)) {
+  const codecs = RTCRtpSender.getCapabilities("video").codecs;
+  codecs.forEach((codec) => {
+    if (["video/red", "video/ulpfec", "video/rtx"].includes(codec.mimeType)) {
       return;
     }
-    const option = document.createElement('option');
-    option.value = (codec.mimeType + ' ' + (codec.sdpFmtpLine || '')).trim();
+    const option = document.createElement("option");
+    option.value = (codec.mimeType + " " + (codec.sdpFmtpLine || "")).trim();
     option.innerText = option.value;
     codecPreferences.appendChild(option);
   });
@@ -283,8 +293,8 @@ function showStatsMessage() {
 
     const array = createDisplayStringArray(stats, lastStats);
     if (array.length) {
-      messageDiv.style.display = 'block';
-      messageDiv.innerHTML = array.join('<br>');
+      messageDiv.style.display = "block";
+      messageDiv.innerHTML = array.join("<br>");
     }
     lastStats = stats;
   }, 1000);
@@ -296,8 +306,8 @@ function clearStatsMessage() {
   }
   lastStats = null;
   intervalId = null;
-  localVideoStatsDiv.innerHTML = '';
-  remoteVideoStatsDiv.innerHTML = '';
-  messageDiv.style.display = 'none';
-  messageDiv.innerHTML = '';
+  localVideoStatsDiv.innerHTML = "";
+  remoteVideoStatsDiv.innerHTML = "";
+  messageDiv.style.display = "none";
+  messageDiv.innerHTML = "";
 }

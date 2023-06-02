@@ -126,8 +126,23 @@ body {
   margin-left: 0.5em;
 }
 
+.btn--logout {
+  width: 140px;
+  padding: 10px;
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+}
+
 .btn--login:hover,
-.btn--register:hover {
+.btn--register:hover,
+.btn--logout:hover {
   background-color: #dbdbdb;
   border-radius: 1em;
 }
