@@ -159,8 +159,11 @@ var createServer = function (config) {
   });
 
   app.get("/json", (req, res) => {
-    res.send("되나여");
-    // res.render("home/json")
+    const query = "SELECT * FROM users";
+    db.query(query, (error, results) => {
+      if (error) console.error("Error executing MySQL query");
+      res.json(results);
+    });
   });
 
   return app;
