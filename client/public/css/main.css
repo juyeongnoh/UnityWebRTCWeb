@@ -106,7 +106,7 @@ section#menu {
 
 .btn--login,
 .btn--register {
-  width: 45%;
+  /* width: 45%; */
   padding: 10px;
   border-radius: 1em;
   color: #333;
@@ -114,8 +114,7 @@ section#menu {
   font-weight: 700;
   text-align: center;
   transition: 0.4s;
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
+  margin: 0.5em;
 }
 
 .btn--logout {
