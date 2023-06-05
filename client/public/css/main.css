@@ -1,40 +1,178 @@
-h1 {
-  border-bottom: 1px solid #ccc;
-  font-weight: 500;
-  margin: 0 0 0.8em 0;
-  padding: 0 0 0.2em 0;
+@font-face {
+  font-family: "SUIT-Regular";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2")
+    format("woff2");
+  font-weight: normal;
+  font-style: normal;
 }
 
-h4 {
-  margin: 0;
-  padding: 0 0 0.2em 0;
-}
-
+/* BODY */
 body {
-  font-family: 'Roboto', sans-serif;
+  background-color: skyblue;
+  font-family: "SUIT", sans-serif;
   font-weight: 300;
-  margin: 0;
-  padding: 1em;
   word-break: break-word;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-section {
-  border-bottom: 1px solid #eee;
-  margin: 0 0 1.5em 0;
-  padding: 0 0 1.5em 0;
+/* CONTENTS */
+#container {
+  padding: 1em;
+  margin: 1em;
+  background-color: #f8f8f8;
+  border-radius: 1em;
+  position: absolute;
 }
 
-section:last-child {
+/* TITLE */
+#container header.title {
+  /* background-color: yellow; */
+  text-align: center;
+  padding: 3em;
+}
+
+#container header.title img {
+  height: 15px;
+}
+
+#container header.title h1 {
+  font-family: "SUIT", sans-serif;
+  font-weight: 900;
+  font-size: 2.5em;
+}
+
+/* CONNECTION INFO */
+#container section#menu {
+  /* background-color: salmon; */
+  display: flex;
+  justify-content: center;
+  padding: 0 0 1em 0;
+}
+
+/* BUTTONS */
+.btn--pc {
+  width: 140px;
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 1em;
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-right: 0.5em;
+}
+
+.btn--pc:hover {
+  background-color: #fc5185;
+  color: #fff;
+}
+
+.btn--videocall {
+  width: 140px;
+  padding: 10px;
+  border: 2px solid #333;
+  border-radius: 1em;
+  color: #333;
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-left: 0.5em;
+}
+
+.btn--videocall:hover {
+  background-color: #3fc1c9;
+  color: #fff;
+}
+
+.btn--login {
+  width: 140px;
+  padding: 10px;
+  /* /* border: 1px solid #333; */
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-right: 0.5em;
+}
+
+.btn--register {
+  width: 140px;
+  padding: 10px;
+  /* /* border: 1px solid #333; */
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+  margin-left: 0.5em;
+}
+
+.btn--logout {
+  width: 140px;
+  padding: 10px;
+  border-radius: 1em;
+  color: #333;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: block;
+  transition: 0.4s;
+}
+
+.btn--login:hover,
+.btn--register:hover,
+.btn--logout:hover {
+  background-color: #dbdbdb;
+  border-radius: 1em;
+}
+
+/* CONNECTION INFO */
+#container section#info {
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  padding: 1em;
+}
+
+#container section#info #startup h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 0 0 0.5em 0;
+}
+
+#container section#info #startup li {
+  color: #888;
+}
+
+#container section#info #startup em {
+  font-weight: 700;
+}
+/* section:last-child {
   border-bottom: none;
   margin: 0;
   padding: 0;
-}
-
-div#container {
-  margin: 0 auto 0 auto;
-  max-width: 60em;
-  padding: 1em 1.5em 1.3em 1.5em;
-}
+} */
 
 code {
   padding: 0.1em 0.25em;
