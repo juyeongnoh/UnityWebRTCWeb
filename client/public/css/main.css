@@ -104,50 +104,33 @@ section#menu {
   color: #fff;
 }
 
-.btn--login {
-  width: 140px;
-  padding: 10px;
-  /* /* border: 1px solid #333; */
-  border-radius: 1em;
-  color: #333;
-  font-size: 15px;
-  font-weight: 700;
-  text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  display: block;
-  transition: 0.4s;
-  margin-right: 0.5em;
-}
-
+.btn--login,
 .btn--register {
-  width: 140px;
+  width: 45%;
   padding: 10px;
-  /* /* border: 1px solid #333; */
   border-radius: 1em;
   color: #333;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   text-align: center;
-  cursor: pointer;
-  box-sizing: border-box;
-  display: block;
   transition: 0.4s;
-  margin-left: 0.5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .btn--logout {
-  width: 140px;
+  width: 100%;
   padding: 10px;
   border-radius: 1em;
   color: #333;
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   text-align: center;
   cursor: pointer;
   box-sizing: border-box;
-  display: block;
   transition: 0.4s;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 .btn--login:hover,

@@ -16,7 +16,7 @@ function getCookie(name) {
 
 // 쿠키에서 값을 가져와서 <h2>에 표시하기
 var user_cookieValue = getCookie("user");
-console.log(getCookie("user"));
+console.log("USER " + getCookie("user"));
 
 var greetingMessage = "안녕하세요, " + user_cookieValue + "님!";
 var user_cookieDisplay = document.getElementById("user_cookieValue");
