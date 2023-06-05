@@ -1,3 +1,4 @@
 node_modules
-cert
+cert/
+cert.zip
 .DS_Store
