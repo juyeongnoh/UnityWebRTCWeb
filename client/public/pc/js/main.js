@@ -40,7 +40,7 @@ messageDiv.style.display = "none";
 
 let useCustomResolution = false;
 
-setUpInputSelect();
+// setUpInputSelect();
 showCodecSelect();
 
 /** @type {SendVideo} */
@@ -52,10 +52,10 @@ let connectionId;
 
 const startButton = document.getElementById("btnStartSharing");
 startButton.addEventListener("click", startVideo);
-const setupButton = document.getElementById("setUpButton");
-setupButton.addEventListener("click", setUp);
-const hangUpButton = document.getElementById("hangUpButton");
-hangUpButton.addEventListener("click", hangUp);
+// const setupButton = document.getElementById('setUpButton');
+// setupButton.addEventListener('click', setUp);
+// const hangUpButton = document.getElementById('hangUpButton');
+// hangUpButton.addEventListener('click', hangUp);
 
 window.addEventListener(
   "beforeunload",
@@ -84,37 +84,34 @@ function showWarningIfNeeded(startupMode) {
 }
 
 async function startVideo() {
-  videoSelect.disabled = true;
-  audioSelect.disabled = true;
-  videoResolutionSelect.disabled = true;
-  cameraWidthInput.disabled = true;
-  cameraHeightInput.disabled = true;
-  startButton.disabled = true;
-
-  let width = 0;
-  let height = 0;
-  if (useCustomResolution) {
-    width = cameraWidthInput.value
-      ? cameraWidthInput.value
-      : defaultStreamWidth;
-    height = cameraHeightInput.value
-      ? cameraHeightInput.value
-      : defaultStreamHeight;
-  } else {
-    const size = streamSizeList[videoResolutionSelect.value];
-    width = size.width;
-    height = size.height;
-  }
-
-  // if (videoSelect.value == 'Screen Sharing') {
-  //   console.log('startlocalvideoscreen');
+  // START
   await sendVideo.startLocalVideoScreen();
-  // } else {
-  //   await sendVideo.startLocalVideo(videoSelect.value, audioSelect.value, width, height);
-  // }
 
-  // enable setup button after initializing local video.
-  setupButton.disabled = false;
+  // SETUP
+  connectionId = textForConnectionId.value;
+  const signaling = useWebSocket ? new WebSocketSignaling() : new Signaling();
+  const config = getRTCConfiguration();
+  renderstreaming = new RenderStreaming(signaling, config);
+  renderstreaming.onConnect = () => {
+    const tracks = sendVideo.getLocalTracks();
+    for (const track of tracks) {
+      renderstreaming.addTransceiver(track, { direction: "sendonly" });
+    }
+    setCodecPreferences();
+    showStatsMessage();
+  };
+  renderstreaming.onDisconnect = () => {
+    hangUp();
+  };
+  renderstreaming.onTrackEvent = (data) => {
+    const direction = data.transceiver.direction;
+    if (direction == "sendrecv" || direction == "recvonly") {
+      sendVideo.addRemoteTrack(data.track);
+    }
+  };
+
+  await renderstreaming.start();
+  await renderstreaming.createConnection(connectionId);
 }
 
 async function setUp() {
@@ -204,51 +201,51 @@ function getRandom() {
   return 11111;
 }
 
-async function setUpInputSelect() {
-  const deviceInfos = await navigator.mediaDevices.enumerateDevices();
+// async function setUpInputSelect() {
+//   const deviceInfos = await navigator.mediaDevices.enumerateDevices();
 
-  for (let i = 0; i !== deviceInfos.length; ++i) {
-    const deviceInfo = deviceInfos[i];
-    if (deviceInfo.kind === "videoinput") {
-      const option = document.createElement("option");
-      option.value = deviceInfo.deviceId;
-      option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
-      videoSelect.appendChild(option);
-    } else if (deviceInfo.kind === "audioinput") {
-      const option = document.createElement("option");
-      option.value = deviceInfo.deviceId;
-      option.text = deviceInfo.label || `mic ${audioSelect.length + 1}`;
-      audioSelect.appendChild(option);
-    }
-  }
+//   for (let i = 0; i !== deviceInfos.length; ++i) {
+//     const deviceInfo = deviceInfos[i];
+//     if (deviceInfo.kind === 'videoinput') {
+//       const option = document.createElement('option');
+//       option.value = deviceInfo.deviceId;
+//       option.text = deviceInfo.label || `camera ${videoSelect.length + 1}`;
+//       videoSelect.appendChild(option);
+//     } else if (deviceInfo.kind === 'audioinput') {
+//       const option = document.createElement('option');
+//       option.value = deviceInfo.deviceId;
+//       option.text = deviceInfo.label || `mic ${audioSelect.length + 1}`;
+//       audioSelect.appendChild(option);
+//     }
+//   }
 
-  // pc 화면 공유를 위한 옵션 추가
-  const pcScreen = document.createElement("option");
-  pcScreen.value = "Screen Sharing";
-  pcScreen.text = "Screen Sharing";
-  videoSelect.appendChild(pcScreen);
+//   // pc 화면 공유를 위한 옵션 추가
+//   const pcScreen = document.createElement('option');
+//   pcScreen.value = 'Screen Sharing';
+//   pcScreen.text = 'Screen Sharing';
+//   videoSelect.appendChild(pcScreen);
 
-  for (let i = 0; i < streamSizeList.length; i++) {
-    const streamSize = streamSizeList[i];
-    const option = document.createElement("option");
-    option.value = i;
-    option.text = `${streamSize.width} x ${streamSize.height}`;
-    videoResolutionSelect.appendChild(option);
-  }
+//   for (let i = 0; i < streamSizeList.length; i++) {
+//     const streamSize = streamSizeList[i];
+//     const option = document.createElement('option');
+//     option.value = i;
+//     option.text = `${streamSize.width} x ${streamSize.height}`;
+//     videoResolutionSelect.appendChild(option);
+//   }
 
-  const option = document.createElement("option");
-  option.value = streamSizeList.length;
-  option.text = "Custom";
-  videoResolutionSelect.appendChild(option);
-  videoResolutionSelect.value = 1; // default select index (1280 x 720)
+//   const option = document.createElement('option');
+//   option.value = streamSizeList.length;
+//   option.text = 'Custom';
+//   videoResolutionSelect.appendChild(option);
+//   videoResolutionSelect.value = 1; // default select index (1280 x 720)
 
-  videoResolutionSelect.addEventListener("change", (event) => {
-    const isCustom = event.target.value >= streamSizeList.length;
-    cameraWidthInput.disabled = !isCustom;
-    cameraHeightInput.disabled = !isCustom;
-    useCustomResolution = isCustom;
-  });
-}
+//   videoResolutionSelect.addEventListener('change', (event) => {
+//     const isCustom = event.target.value >= streamSizeList.length;
+//     cameraWidthInput.disabled = !isCustom;
+//     cameraHeightInput.disabled = !isCustom;
+//     useCustomResolution = isCustom;
+//   });
+// }
 
 function showCodecSelect() {
   if (!supportsSetCodecPreferences) {
@@ -276,11 +273,11 @@ let intervalId;
 function showStatsMessage() {
   intervalId = setInterval(async () => {
     if (localVideo.videoWidth) {
-      localVideoStatsDiv.innerHTML = `<strong>Sending resolution:</strong> ${localVideo.videoWidth} x ${localVideo.videoHeight} px`;
+      localVideoStatsDiv.innerHTML = `<em>Sending resolution:</em> ${localVideo.videoWidth} x ${localVideo.videoHeight} px`;
     }
-    if (remoteVideo.videoWidth) {
-      remoteVideoStatsDiv.innerHTML = `<strong>Receiving resolution:</strong> ${remoteVideo.videoWidth} x ${remoteVideo.videoHeight} px`;
-    }
+    // if (remoteVideo.videoWidth) {
+    //   remoteVideoStatsDiv.innerHTML = `<strong>Receiving resolution:</strong> ${remoteVideo.videoWidth} x ${remoteVideo.videoHeight} px`;
+    // }
 
     if (renderstreaming == null || connectionId == null) {
       return;

@@ -1,6 +1,6 @@
 {
-    "name": "Emptied",
-    "short_name": "Emptied",
+    "name": "emptied",
+    "short_name": "emptied",
     "icons": [{
         "src": "icons/icon-192x192.png",
         "sizes": "192x192",

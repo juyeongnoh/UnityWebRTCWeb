@@ -4,11 +4,12 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link rel="icon" href="../images/favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="../css/main.css" />
   <link rel="stylesheet" href="css/style.css" />
-  <title>emptied - PC 화면 공유</title>
+  <title>emptied | PC 화면 공유</title>
 </head>
 
 <body>
@@ -16,19 +17,15 @@
     <h1>PC 화면 공유</h1>
 
     <div id="warning" hidden=true></div>
-    <div id="btnStartSharing" class="btn--pc">
-      <div class="material-icons">computer</div>
-      <br>화면 공유 시작하기
-    </div>
 
-    <div id="select">
+    <!-- <div id="select">
       <label for="videoSource">Video source: </label>
       <select id="videoSource" autocomplete="off"></select>
       <label for="audioSource">Audio source: </label>
       <select id="audioSource" autocomplete="off"></select>
-    </div>
+    </div> -->
 
-    <div id="resolutionSelect">
+    <!-- <div id="resolutionSelect">
       <label for="videoResolution">Video resolution: </label><select id="videoResolution" autocomplete="off"></select>
     </div>
     <div id="resolutionInput">
@@ -41,17 +38,22 @@
       <button type="button" id="startVideoButton" autocomplete="off">Start Video</button>
       <button type="button" id="setUpButton" autocomplete="off" disabled>Set Up</button>
       <button type="button" id="hangUpButton"  autocomplete="off" disabled>Hang Up</button>
-    </div>
+    </div> -->
 
     <div id="preview">
       <div id="local">
-        <h2>Local</h2>
         <video id="localVideo" playsinline autoplay muted=true></video>
-        <div id="localVideoStats"></div>
       </div>
     </div>
 
-    <div class="box">
+    <div id="btnStartSharing" class="btn--red">
+      <div class="material-icons">computer</div>
+      <br>화면 공유 시작하기
+    </div>
+
+    <section id="info">
+      <h3>전송 정보</h3>
+      <br>
       <span>Connection ID:</span>
       <textarea id="textForConnectionId" class ="connection_cookie"></textarea>
     </div>
@@ -60,10 +62,10 @@
       <select id="codecPreferences" autocomplete="off" disabled>
         <option selected value="">Default</option>
       </select>
-    </div>
 
-    <div id="message"></div>
-
+      <div id="localVideoStats"></div>
+      <div id="message"></div>
+    </section>
   </div>
 </body>
 
