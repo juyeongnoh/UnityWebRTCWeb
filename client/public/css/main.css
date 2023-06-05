@@ -1,3 +1,5 @@
+/* GLOBAL */
+
 @font-face {
   font-family: 'SUIT-Regular';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Regular.woff2') format('woff2');
@@ -5,7 +7,22 @@
   font-style: normal;
 }
 
-/* BODY */
+strong {
+  font-weight: 700;
+}
+
+h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0 0 .5em 0;
+}
+
+h2 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 0 0 .5em 0;
+}
+
 body {
   background-color: skyblue;
   font-family: 'SUIT', sans-serif;
@@ -16,43 +33,36 @@ body {
   justify-content: center;
 }
 
-/* CONTENTS */
 #container {
-  padding: 1em;
-  margin: 1em;
   background-color: #f8f8f8;
   border-radius: 1em;
+  width: 90%;
+  max-width: 1000px;
   position: absolute;
+  padding: 1em;
+  margin: 1em;
 }
 
-/* TITLE */
-#container header.title {
-  /* background-color: yellow; */
+header.title {
   text-align: center;
   padding: 3em;
 }
 
-#container header.title img {
+header.title img {
   height: 15px;
 }
 
-#container header.title h1 {
+header.title h1 {
   font-family: 'SUIT', sans-serif;
   font-weight: 900;
   font-size: 2.5em;
 }
 
-/* CONNECTION INFO */
-#container section#menu {
-  /* background-color: salmon; */
-  display: flex;
-  justify-content: center;
-  padding: 0 0 1em 0;
+section#menu {
 }
 
-/* BUTTONS */
-.btn--pc {
-  width: 140px;
+.btn--red {
+  width: 100%;
   padding: 10px;
   border: 2px solid #333;
   border-radius: 1em;
@@ -62,18 +72,18 @@ body {
   text-align: center;
   cursor: pointer;
   box-sizing: border-box;
-  display: block;
   transition: .4s;
-  margin-right: .5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-.btn--pc:hover {
+.btn--red:hover {
   background-color: #fc5185;
   color: #fff;
 }
 
-.btn--videocall {
-  width: 140px;
+.btn--blue {
+  width: 100%;
   padding: 10px;
   border: 2px solid #333;
   border-radius: 1em;
@@ -83,25 +93,26 @@ body {
   text-align: center;
   cursor: pointer;
   box-sizing: border-box;
-  display: block;
   transition: .4s;
-  margin-left: .5em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
-.btn--videocall:hover {
+.btn--blue:hover {
   background-color: #3fc1c9;
   color: #fff;
 }
 
-/* CONNECTION INFO */
+
 #container section#info {
   color: #333;
   border: 1px solid #ccc;
   border-radius: 1em;
   padding: 1em;
+  margin-top: 0.5em;
 }
 
-#container section#info #startup h3 {
+#container section#info #startup h2 {
   font-size: 1.2em;
   font-weight: 700;
   margin: 0 0 .5em 0;
@@ -110,15 +121,6 @@ body {
 #container section#info #startup li {
   color: #888;
 }
-
-#container section#info #startup em {
-  font-weight: 700;
-}
-/* section:last-child {
-  border-bottom: none;
-  margin: 0;
-  padding: 0;
-} */
 
 code {
   padding: 0.1em 0.25em;
@@ -149,10 +151,8 @@ p.borderBelow {
 
 video {
   background: #222;
-  margin: 0 0 20px 0;
   --width: 100%;
   width: var(--width);
-  height: calc(var(--width) * 0.75);
 }
 
 div#warning {
@@ -165,12 +165,6 @@ div#warning {
 
 div.box {
   margin: 1em;
-}
-
-div#message {
-  border-top: 1px solid #666;
-  margin: 1em;
-  padding: 1em;
 }
 
 @media screen and (max-width: 650px) {

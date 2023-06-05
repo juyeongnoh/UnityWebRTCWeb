@@ -1,4 +1,9 @@
-div#select, div#resolution {
+/* div h1 {
+  padding-bottom: 0.5em;
+  border-bottom: 1px solid #000;
+} */
+
+/* div#select, div#resolution {
   margin: 1em;
 }
 
@@ -38,6 +43,17 @@ div#connectionId {
 h2 {
   margin: 0 0 0.5em 0;
 }
+*/
+
+section#info {
+  
+}
+
+section#info h3 {
+  font-size: 1.2em;
+  font-weight: 700;
+  margin: 0;
+}
 
 textarea {
   color: #444;
@@ -50,5 +66,16 @@ textarea {
 }
 
 video {
-  height: 225px;
+  background-color: #444;
+  background-image: url("../../images/logo_forVideoElement.png");
+  background-position: 50% 50%;
+  background-size: 25%;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 56.25%;
+  border-radius: 1em;
+} 
+
+select#codecPreferences {
+  width: 100%;
 }
