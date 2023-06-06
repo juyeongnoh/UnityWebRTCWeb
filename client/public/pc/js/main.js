@@ -23,13 +23,25 @@ const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
 const localVideoStatsDiv = document.getElementById("localVideoStats");
 const remoteVideoStatsDiv = document.getElementById("remoteVideoStats");
-const textForConnectionId = document.getElementById("textForConnectionId");
+
+const connId1 = document.getElementById("connId1");
+const connId2 = document.getElementById("connId2");
+const connId3 = document.getElementById("connId3");
+const connId4 = document.getElementById("connId4");
+const connId5 = document.getElementById("connId5");
+
+const startBtn1 = document.getElementById("startBtn1");
+const startBtn2 = document.getElementById("startBtn2");
+const startBtn3 = document.getElementById("startBtn3");
+const startBtn4 = document.getElementById("startBtn4");
+const startBtn5 = document.getElementById("startBtn5");
+
 // textForConnectionId.value = getRandom();
-const videoSelect = document.querySelector("select#videoSource");
-const audioSelect = document.querySelector("select#audioSource");
-const videoResolutionSelect = document.querySelector("select#videoResolution");
-const cameraWidthInput = document.querySelector("input#cameraWidth");
-const cameraHeightInput = document.querySelector("input#cameraHeight");
+// const videoSelect = document.querySelector('select#videoSource');
+// const audioSelect = document.querySelector('select#audioSource');
+// const videoResolutionSelect = document.querySelector('select#videoResolution');
+// const cameraWidthInput = document.querySelector('input#cameraWidth');
+// const cameraHeightInput = document.querySelector('input#cameraHeight');
 
 const codecPreferences = document.getElementById("codecPreferences");
 const supportsSetCodecPreferences =
@@ -46,7 +58,7 @@ showCodecSelect();
 /** @type {SendVideo} */
 let sendVideo = new SendVideo(localVideo, remoteVideo);
 /** @type {RenderStreaming} */
-let renderstreaming;
+let renderstreaming = new Array(5);
 let useWebSocket;
 let connectionId;
 
@@ -57,6 +69,22 @@ startButton.addEventListener("click", startVideo);
 // const hangUpButton = document.getElementById('hangUpButton');
 // hangUpButton.addEventListener('click', hangUp);
 
+startBtn1.addEventListener("click", function () {
+  setUp(connId1.options[connId1.selectedIndex].value, 0);
+});
+startBtn2.addEventListener("click", function () {
+  setUp(connId2.options[connId2.selectedIndex].value, 1);
+});
+startBtn3.addEventListener("click", function () {
+  setUp(connId3.options[connId3.selectedIndex].value, 2);
+});
+startBtn4.addEventListener("click", function () {
+  setUp(connId4.options[connId4.selectedIndex].value, 3);
+});
+startBtn5.addEventListener("click", function () {
+  setUp(connId5.options[connId5.selectedIndex].value, 4);
+});
+
 window.addEventListener(
   "beforeunload",
   async () => {
@@ -65,6 +93,11 @@ window.addEventListener(
   },
   true
 );
+
+// 들어오자마자 영상 시작
+window.addEventListener("load", async () => {
+  await sendVideo.startLocalVideoScreen();
+});
 
 setupConfig();
 
@@ -86,66 +119,136 @@ function showWarningIfNeeded(startupMode) {
 async function startVideo() {
   // START
   await sendVideo.startLocalVideoScreen();
+  startButton.removeEventListener("click", startVideo);
 
   // SETUP
-  connectionId = textForConnectionId.value;
+  // connectionId = textForConnectionId.value;
+  // const signaling1 = useWebSocket ? new WebSocketSignaling() : new Signaling();
+  // const config1 = getRTCConfiguration();
+  // renderstreaming1 = new RenderStreaming(signaling1, config1);
+  // renderstreaming1.onConnect = () => {
+  //   const tracks = sendVideo.getLocalTracks();
+  //   for (const track of tracks) {
+  //     renderstreaming1.addTransceiver(track, { direction: 'sendonly' });
+  //   }
+  //   setCodecPreferences();
+  //   showStatsMessage();
+  // };
+  // renderstreaming1.onDisconnect = () => {
+  //   hangUp();
+  // };
+  // renderstreaming1.onTrackEvent = (data) => {
+  //   const direction = data.transceiver.direction;
+  //   if (direction == "sendrecv" || direction == "recvonly") {
+  //     sendVideo.addRemoteTrack(data.track);
+  //   }
+  // };
+
+  // await renderstreaming1.start();
+  // await renderstreaming1.createConnection("11111");
+
+  // const signaling2 = useWebSocket ? new WebSocketSignaling() : new Signaling();
+  // const config2 = getRTCConfiguration();
+  // renderstreaming2 = new RenderStreaming(signaling2, config2);
+  // renderstreaming2.onConnect = () => {
+  //   const tracks = sendVideo.getLocalTracks();
+  //   for (const track of tracks) {
+  //     renderstreaming2.addTransceiver(track, { direction: 'sendonly' });
+  //   }
+  //   setCodecPreferences();
+  //   showStatsMessage();
+  // };
+  // renderstreaming2.onDisconnect = () => {
+  //   hangUp();
+  // };
+  // renderstreaming2.onTrackEvent = (data) => {
+  //   const direction = data.transceiver.direction;
+  //   if (direction == "sendrecv" || direction == "recvonly") {
+  //     sendVideo.addRemoteTrack(data.track);
+  //   }
+  // };
+
+  // await renderstreaming2.start();
+  // await renderstreaming2.createConnection("11112");
+}
+
+async function setUp(connectionId, index) {
+  if (connectionId === "") {
+    alert("User ID를 선택하세요.");
+    return;
+  }
+
+  let interval;
   const signaling = useWebSocket ? new WebSocketSignaling() : new Signaling();
   const config = getRTCConfiguration();
-  renderstreaming = new RenderStreaming(signaling, config);
-  renderstreaming.onConnect = () => {
+  renderstreaming[index] = new RenderStreaming(signaling, config);
+  renderstreaming[index].onConnect = () => {
     const tracks = sendVideo.getLocalTracks();
     for (const track of tracks) {
-      renderstreaming.addTransceiver(track, { direction: "sendonly" });
+      renderstreaming[index].addTransceiver(track, { direction: "sendonly" });
     }
-    setCodecPreferences();
-    showStatsMessage();
+    setCodecPreferences(index);
+    // showStatsMessage();
   };
-  renderstreaming.onDisconnect = () => {
+  renderstreaming[index].onDisconnect = () => {
+    clearInterval(interval);
     hangUp();
   };
-  renderstreaming.onTrackEvent = (data) => {
+  renderstreaming[index].onTrackEvent = (data) => {
     const direction = data.transceiver.direction;
     if (direction == "sendrecv" || direction == "recvonly") {
       sendVideo.addRemoteTrack(data.track);
     }
   };
 
-  await renderstreaming.start();
-  await renderstreaming.createConnection(connectionId);
+  await renderstreaming[index].start();
+  await renderstreaming[index].createConnection(connectionId);
+
+  // 연결 상태 체크
+  interval = setInterval(async () => {
+    const stats = await renderstreaming[index].getStats();
+    const array = createDisplayStringArray(stats, lastStats);
+    lastStats = stats;
+
+    if (array.join("<br>").includes("undefined")) console.log("로딩중");
+    else console.log("연결 완료");
+  }, 1000);
 }
 
-async function setUp() {
-  setupButton.disabled = true;
-  hangUpButton.disabled = false;
-  connectionId = textForConnectionId.value;
-  codecPreferences.disabled = true;
+// async function setUp() {
+//   // setupButton.disabled = true;
+//   // hangUpButton.disabled = false;
+//   // connectionId = textForConnectionId.value;
+//   // codecPreferences.disabled = true;
 
-  const signaling = useWebSocket ? new WebSocketSignaling() : new Signaling();
-  const config = getRTCConfiguration();
-  renderstreaming = new RenderStreaming(signaling, config);
-  renderstreaming.onConnect = () => {
-    const tracks = sendVideo.getLocalTracks();
-    for (const track of tracks) {
-      renderstreaming.addTransceiver(track, { direction: "sendonly" });
-    }
-    setCodecPreferences();
-    showStatsMessage();
-  };
-  renderstreaming.onDisconnect = () => {
-    hangUp();
-  };
-  renderstreaming.onTrackEvent = (data) => {
-    const direction = data.transceiver.direction;
-    if (direction == "sendrecv" || direction == "recvonly") {
-      sendVideo.addRemoteTrack(data.track);
-    }
-  };
+//   connectionId = textForConnectionId.value;
 
-  await renderstreaming.start();
-  await renderstreaming.createConnection(connectionId);
-}
+//   const signaling = useWebSocket ? new WebSocketSignaling() : new Signaling();
+//   const config = getRTCConfiguration();
+//   renderstreaming = new RenderStreaming(signaling, config);
+//   renderstreaming.onConnect = () => {
+//     const tracks = sendVideo.getLocalTracks();
+//     for (const track of tracks) {
+//       renderstreaming.addTransceiver(track, { direction: 'sendonly' });
+//     }
+//     setCodecPreferences();
+//     showStatsMessage();
+//   };
+//   renderstreaming.onDisconnect = () => {
+//     hangUp();
+//   };
+//   renderstreaming.onTrackEvent = (data) => {
+//     const direction = data.transceiver.direction;
+//     if (direction == "sendrecv" || direction == "recvonly") {
+//       sendVideo.addRemoteTrack(data.track);
+//     }
+//   };
 
-function setCodecPreferences() {
+//   await renderstreaming.start();
+//   await renderstreaming.createConnection(connectionId);
+// }
+
+function setCodecPreferences(index) {
   /** @type {RTCRtpCodecCapability[] | null} */
   let selectedCodecs = null;
   if (supportsSetCodecPreferences) {
@@ -165,7 +268,7 @@ function setCodecPreferences() {
   if (selectedCodecs == null) {
     return;
   }
-  const transceivers = renderstreaming
+  const transceivers = renderstreaming[index]
     .getTransceivers()
     .filter((t) => t.receiver.track.kind == "video");
   if (transceivers && transceivers.length > 0) {
@@ -185,7 +288,7 @@ async function hangUp() {
   renderstreaming = null;
   remoteVideo.srcObject = null;
 
-  textForConnectionId.value = getRandom();
+  // textForConnectionId.value = getRandom();
   connectionId = null;
   if (supportsSetCodecPreferences) {
     codecPreferences.disabled = false;
@@ -269,6 +372,17 @@ function showCodecSelect() {
 
 let lastStats;
 let intervalId;
+
+function showStatus(index) {
+  setInterval(async () => {
+    const stats = await renderstreaming[index].getStats();
+    const array = createDisplayStringArray(stats, lastStats);
+    lastStats = stats;
+
+    if (array.join("<br>").includes("undefined")) console.log("로딩중");
+    else console.log("연결 완료");
+  }, 1000);
+}
 
 function showStatsMessage() {
   intervalId = setInterval(async () => {
