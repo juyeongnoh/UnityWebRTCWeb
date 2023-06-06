@@ -10,6 +10,7 @@ var log_1 = require("./log");
 var httphandler_1 = require("./class/httphandler");
 var cors = require("cors");
 var cookieParser = require("cookie-parser");
+var fs = require("fs");
 
 const mysql = require("mysql");
 
@@ -93,6 +94,22 @@ var createServer = function (config) {
   app.use(express.urlencoded({ extended: true }));
   app.use(express.json());
   app.get("/config", function (req, res) {
+    const query = "SELECT * FROM users";
+    db.query(query, (error, results) => {
+      if (error) console.error("Error executing MySQL query");
+
+      var string = JSON.stringify(results);
+
+      const file = "client/public/test.txt";
+      fs.open(file, "w", (err, fd) => {
+        if (err) throw err;
+        console.log("file open");
+      });
+      fs.writeFile(file, string, "utf-8", (err) => {
+        console.log("write end");
+      });
+    });
+
     return res.json({
       useWebSocket: config.type == "websocket",
       startupMode: config.mode,
@@ -158,13 +175,23 @@ var createServer = function (config) {
     res.redirect("/");
   });
 
-  app.get("/json", (req, res) => {
-    const query = "SELECT * FROM users";
-    db.query(query, (error, results) => {
-      if (error) console.error("Error executing MySQL query");
-      res.json(results);
-    });
-  });
+  // app.get("/json", (req, res) => {
+  //   const query = "SELECT * FROM users";
+  //   db.query(query, (error, results) => {
+  //     if (error) console.error("Error executing MySQL query");
+
+  //     var string = JSON.stringify(results);
+
+  //     const file = "client/public/test.txt";
+  //     fs.open(file, "w", (err, fd) => {
+  //       if (err) throw err;
+  //       console.log("file open");
+  //     });
+  //     fs.writeFile(file, string, "utf-8", (err) => {
+  //       console.log("write end");
+  //     });
+  //   });
+  // });
 
   return app;
 };
