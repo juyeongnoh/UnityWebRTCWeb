@@ -5,7 +5,7 @@ export class SendVideo {
     this.localVideo = localVideoElement;
     this.remoteVideo = remoteVideoElement;
   }
-
+// 카메라와 마이크를 이용하여 포컬 
   /**
    * @param {MediaTrackConstraints} videoSource
    * @param {MediaTrackConstraints} audioSource
@@ -36,7 +36,13 @@ export class SendVideo {
   // 화면 공유 시작
    async startLocalVideoScreen() {
     try {
-      const constraints = { video: true, audio: true };
+      const constraints = {
+        // PC 전체 화면 기본 선택
+        video: {
+          displaySurface: 'monitor'
+        },
+        audio: true
+      };
       const localStream = await navigator.mediaDevices.getDisplayMedia(constraints);
       this.localVideo.srcObject = localStream;
       await this.localVideo.play();

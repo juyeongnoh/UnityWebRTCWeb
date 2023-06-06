@@ -65,17 +65,6 @@ textarea {
   vertical-align: middle;
 }
 
-video {
-  background-color: #444;
-  background-image: url("../../images/logo_forVideoElement.png");
-  background-position: 50% 50%;
-  background-size: 25%;
-  background-repeat: no-repeat;
-  width: 100%;
-  height: 56.25%;
-  border-radius: 1em;
-} 
-
 select#codecPreferences {
   width: 100%;
 }

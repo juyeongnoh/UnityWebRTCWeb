@@ -213,12 +213,6 @@ async function setUpInputSelect() {
     }
   }
 
-  // pc 화면 공유를 위한 옵션 추가
-  const pcScreen = document.createElement('option');
-  pcScreen.value = 'Screen Sharing';
-  pcScreen.text = 'Screen Sharing';
-  videoSelect.appendChild(pcScreen);
-
   for (let i = 0; i < streamSizeList.length; i++) {
     const streamSize = streamSizeList[i];
     const option = document.createElement('option');
