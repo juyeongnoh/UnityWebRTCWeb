@@ -150,12 +150,6 @@ p.borderBelow {
   padding: 0 0 20px 0;
 }
 
-video {
-  background: #222;
-  --width: 100%;
-  width: var(--width);
-}
-
 div#warning {
   color: #8a6d3b;
   background-color: #fcf8e3;
@@ -164,9 +158,6 @@ div#warning {
   border: 1px solid transparent;
 }
 
-div.box {
-  margin: 1em;
-}
 
 @media screen and (max-width: 650px) {
   .highlight {
@@ -205,4 +196,5 @@ video {
   width: 100%;
   height: 56.25%;
   border-radius: 1em;
+  margin: 0 0 .5em;
 } 

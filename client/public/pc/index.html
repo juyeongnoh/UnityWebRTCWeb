@@ -15,7 +15,6 @@
 <body>
   <div id="container">
     <h1>PC 화면 공유</h1>
-
     <div id="warning" hidden=true></div>
 
     <!-- <div id="select">
@@ -51,22 +50,71 @@
       <br>화면 공유 시작하기
     </div>
 
-    <section id="info">
-      <h3>전송 정보</h3>
-      <br>
-      <span>Connection ID:</span>
-      <textarea id="textForConnectionId"></textarea>
+    <div class="connectionList">
+      <div class="box">
+        <div>User1</div>
+        <select id="connId1">
+          <option value="">유저 ID</option>
+          <option value="11111">11111</option>
+          <option value="11112">11112</option>
+          <option value="11113">11113</option>
+        </select>
+        <div id="startBtn1" class="btn--blue">전송</div>
+      </div>
+      <div class="box">
+        <div>User2</div>
+        <select id="connId2">
+          <option value="">유저 ID</option>
+          <option value="11111">11111</option>
+          <option value="11112">11112</option>
+          <option value="11113">11113</option>
+        </select>
+        <div id="startBtn2" class="btn--blue">전송</div>
+      </div>
+      <div class="box">
+        <div>User3</div>
+        <select id="connId3">
+          <option value="">유저 ID</option>
+          <option value="11111">11111</option>
+          <option value="11112">11112</option>
+          <option value="11113">11113</option>
+        </select>
+        <div id="startBtn3" class="btn--blue">전송</div>
+      </div>
+      <div class="box">
+        <div>User4</div>
+        <select id="connId4">
+          <option value="">유저 ID</option>
+          <option value="juyeongnoh">juyeongnoh</option>
+          <option value="seikang">seikang</option>
+          <option value="jayjoonjeong">jayjoonjeong</option>
+        </select>
+        <div id="startBtn4" class="btn--blue">전송</div>
+      </div>
+      <div class="box">
+        <div>User5</div>
+        <select id="connId5">
+          <option value="">유저 ID</option>
+          <option value="juyeongnoh">juyeongnoh</option>
+          <option value="seikang">seikang</option>
+          <option value="jayjoonjeong">jayjoonjeong</option>
+        </select>
+        <div id="startBtn5" class="btn--blue">전송</div>
+      </div>
+    </div>
 
-      <br>
 
-      <span>Codec preferences:</span>
+    <div class="info">
+      <h3>Codec preferences:</h3>
       <select id="codecPreferences" autocomplete="off" disabled>
         <option selected value="">Default</option>
       </select>
-
-      <div id="localVideoStats"></div>
-      <div id="message"></div>
+    </div>
+    
+    <div id="localVideoStats"></div>
+    <div id="message"></div>
     </section>
+  </div>
   </div>
 </body>
 

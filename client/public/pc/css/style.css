@@ -45,11 +45,87 @@ h2 {
 }
 */
 
-section#info {
-  
+#titleDiv {
+  position: relative;
 }
 
-section#info h3 {
+#titleDiv h1 {
+  display: inline-block;
+}
+
+#titleDiv .btn--blue {
+  width: 100px;
+  /* position: absolute; */
+}
+
+div.connectionList {
+  margin: .5em 0 .5em;
+  display: flex;
+}
+
+div.box:first-child {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  margin-right: 0.5em;
+}
+
+div.box:nth-child(2) {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+div.box:nth-child(3) {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+div.box:nth-child(4) {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+}
+
+div.box:last-child {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  margin-left: 0.5em;
+}
+
+div.box div {
+  font-weight: 700;
+  margin-bottom: 0.5em;
+}
+
+div.box select {
+  width: 100%;
+  height: 30px;
+  border-radius: 1em;
+}
+
+div.info {
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 1em;
+  padding: 1em;
+  margin-top: .55em;
+}
+
+div.info h3 {
   font-size: 1.2em;
   font-weight: 700;
   margin: 0;

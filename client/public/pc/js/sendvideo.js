@@ -51,7 +51,6 @@ export class SendVideo {
     }
   }
 
-
   /**
    * @returns {MediaStreamTrack[]}
    */
