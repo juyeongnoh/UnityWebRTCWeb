@@ -99,13 +99,13 @@ var createServer = function (config) {
       if (error) console.error("Error executing MySQL query");
 
       var string = JSON.stringify(results);
-
+      var jsonstring = '{ "Array" :' + JSON.stringify(results) + "}";
       const file = "client/public/test.txt";
       fs.open(file, "w", (err, fd) => {
         if (err) throw err;
         console.log("file open");
       });
-      fs.writeFile(file, string, "utf-8", (err) => {
+      fs.writeFileSync(file, string, "utf-8", (err) => {
         console.log("write end");
       });
     });
@@ -116,6 +116,9 @@ var createServer = function (config) {
       logging: config.logging,
     });
   });
+
+  app.use(express.static(path.join(__dirname, "../client/public/pc/js")));
+
   app.use("/signaling", signaling_1.default);
   app.use(express.static(path.join(__dirname, "../client/public")));
   app.use("/module", express.static(path.join(__dirname, "../client/src")));
