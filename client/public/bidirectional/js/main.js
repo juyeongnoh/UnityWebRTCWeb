@@ -139,6 +139,7 @@ async function setUp() {
 
   await renderstreaming.start();
   await renderstreaming.createConnection(connectionId);
+  console.log(connectionId);
 }
 
 function setCodecPreferences() {
